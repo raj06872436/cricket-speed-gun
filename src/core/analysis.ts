@@ -77,6 +77,15 @@ export function medianDt(times: number[]): number {
   return d[Math.floor(d.length / 2)];
 }
 
+/** Standard deviation of the frame interval (s); 0 for a perfectly regular camera. */
+export function frameJitter(times: number[]): number {
+  if (times.length < 4) return 0;
+  const d: number[] = [];
+  for (let i = 1; i < times.length; i++) d.push(times[i] - times[i - 1]);
+  const m = d.reduce((a, b) => a + b, 0) / d.length;
+  return Math.sqrt(d.reduce((a, b) => a + (b - m) ** 2, 0) / d.length);
+}
+
 export class AnalysisError extends Error {}
 
 /** Automatic analysis from per-frame motion blobs (coordinates in the same space as the calibration). */
@@ -117,7 +126,9 @@ export function analyzeAuto(frames: FrameBlobs[], cal: Calibration, model: Model
   const vPx = speed.average * ppm;
   const sig = (c: Crossing) =>
     c.method === 'interpolated' ? 0.15 * frameDt : 0.3 * frameDt + (0.15 * c.extrapolatedPx) / Math.max(vPx, 1);
-  const sigma = Math.hypot(sig(cA), sig(cB));
+  // Uneven frame timing (a busy phone, a camera that drops frames) makes timestamps less trustworthy.
+  const jitter = frameJitter(frames.map((f) => f.t).filter((t) => t >= cA.t - 0.1 && t <= cB.t + 0.1));
+  const sigma = Math.hypot(sig(cA), sig(cB), jitter);
   const error = speedError(speed.release, time, sigma);
 
   let confidence: Confidence = 'high';

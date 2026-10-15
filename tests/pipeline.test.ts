@@ -108,3 +108,11 @@ describe('honesty', () => {
     expect(() => run2(frames, { lineA: A, lineB: B, posA: 1.22, posB: 20.12 })).toThrow(/only visible for part/);
   });
 });
+
+describe('frameJitter', () => {
+  it('is zero for a steady camera and grows with uneven frames', async () => {
+    const { frameJitter } = await import('../src/core/analysis');
+    expect(frameJitter([0, 0.01, 0.02, 0.03, 0.04])).toBeCloseTo(0);
+    expect(frameJitter([0, 0.01, 0.05, 0.06, 0.1])).toBeGreaterThan(0.01);
+  });
+});

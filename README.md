@@ -19,6 +19,18 @@ No app store, no sign-up, no special equipment. Open the website on your phone, 
    The app remembers them, so if you film from the same spot next time it's one tap.
 3. **Tap _Measure speed_.** The app finds the ball and shows the speed in big numbers.
 
+### ⚡ Live speed gun (real time)
+
+Want speeds while you bowl, without recording anything? Tap **Live speed gun**:
+
+1. Put the phone somewhere **steady** (tripod, or propped up), side-on to the pitch.
+2. Tap the bowler's crease and the batter's stumps once, then press **Start**.
+3. Bowl. About half a second after each ball passes the batter, the speed pops up with a beep and a buzz. Every ball is saved, with a running *fastest / average* for the session.
+
+The screen stays on while it's watching, and it warns you if the phone is moving. Live mode uses the camera's normal frame rate (usually 30–60 fps). For the most accurate single reading, film in slow-motion and use *Use a video*.
+
+### Detailed analysis
+
 Want more? Open **Detailed analysis** for:
 
 - Speed out of the hand, average speed, and speed reaching the batter
@@ -71,7 +83,7 @@ Videos are processed **on your phone** and never uploaded anywhere.
 ### Project layout
 
 ```
-src/core/       Pure, tested logic: detection, tracking, geometry, physics
+src/core/       Pure, tested logic: detection, tracking, live delivery detection, geometry, physics
 src/video/      Camera recording and frame-accurate video scanning
 src/ui/         Screens, canvas stage (line placement, zoom), charts
 tests/          Unit tests incl. synthetic deliveries with known speeds
@@ -98,9 +110,13 @@ npm run build
 node scripts/make-test-video.mjs test-videos/d120.webm 120 140 14.5   # 120 fps, 140 km/h, bounce at 14.5 m
 node scripts/make-test-video.mjs test-videos/slo.webm 240 145 13 30   # 240 fps slow-mo that plays at 30 fps
 node scripts/e2e.mjs test-videos/d120.webm screenshots/
+
+# Live mode: Chromium's fake camera plays a looping delivery
+ffmpeg -i test-videos/d60.webm -pix_fmt yuv420p test-videos/d60.y4m   # (copy d60.json alongside)
+node scripts/e2e-live.mjs test-videos/d60.y4m screenshots/
 ```
 
-Results at the time of writing: 120 fps → 139.2 km/h (true 140), 240 fps slow-mo → 144.7 km/h (true 145), 30 fps → 128.8 km/h (true 130).
+Results at the time of writing: 120 fps → 139.2 km/h (true 140), 240 fps slow-mo → 144.7 km/h (true 145), 30 fps → 128.8 km/h (true 130), live mode at 60 fps → 133–134 km/h (true 135).
 
 ### Deploying
 

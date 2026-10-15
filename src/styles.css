@@ -232,3 +232,19 @@ table.acc th, table.acc td { text-align: left; padding: 8px; border-bottom: 1px 
 .video-holder video { width: 2px; height: 2px; }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* Live speed gun */
+.live-stage { position: relative; }
+.live-status { position: absolute; top: 8px; left: 8px; background: rgb(0 0 0 / 60%); color: #fff; padding: 4px 10px; border-radius: 999px; font-size: 0.82rem; font-weight: 650; pointer-events: none; }
+.live-status:empty { display: none; }
+.live-status.on { color: #7dffb0; }
+.live-status.warn { color: #ffd23f; }
+.live-last { text-align: center; padding: 18px 14px; }
+.live-num { font-size: clamp(4.5rem, 24vw, 8rem); }
+.live-wait { font-size: 1.15rem; font-weight: 650; margin: 6px 0 0; }
+.live-last.flash { animation: flash 0.9s ease-out; }
+@keyframes flash { from { background: var(--accent-soft); transform: scale(1.02); } to { background: var(--surface); transform: none; } }
+.live-sum { display: flex !important; justify-content: space-between; flex-wrap: wrap; font-weight: 650; }
+.live-sum span:last-child { color: var(--muted); font-weight: 500; }
+.setup-extras { display: flex; flex-direction: column; gap: 12px; }
+[hidden] { display: none !important; }

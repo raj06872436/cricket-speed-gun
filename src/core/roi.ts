@@ -23,7 +23,14 @@ const MAX_AREA = 1000 * 440;
  * Picks the part of the video to analyse (the pitch between and around the two
  * lines, up to ~3 m above the ground) and how much to downscale it.
  */
-export function analysisRegion(A: Line, B: Line, distance: number, videoW: number, videoH: number): Region {
+export interface RegionOptions {
+  /** Analysis resolution in px per metre (lower = faster, e.g. for live use). */
+  pxPerMeter?: number;
+  maxWidth?: number;
+  maxArea?: number;
+}
+
+export function analysisRegion(A: Line, B: Line, distance: number, videoW: number, videoH: number, opts: RegionOptions = {}): Region {
   const gate = new Gate(A, B);
   const ppm = gate.spanPx / distance;
   const pts: Pt[] = [A.a, A.b, B.a, B.b];
@@ -39,7 +46,12 @@ export function analysisRegion(A: Line, B: Line, distance: number, videoW: numbe
   y1 = Math.min(videoH, Math.ceil(y1));
   const w = Math.max(16, x1 - x0);
   const h = Math.max(16, y1 - y0);
-  const scale = Math.min(1, TARGET_PX_PER_M / ppm, MAX_W / w, Math.sqrt(MAX_AREA / (w * h)));
+  const scale = Math.min(
+    1,
+    (opts.pxPerMeter ?? TARGET_PX_PER_M) / ppm,
+    (opts.maxWidth ?? MAX_W) / w,
+    Math.sqrt((opts.maxArea ?? MAX_AREA) / (w * h)),
+  );
   return { x: x0, y: y0, w, h, scale };
 }
 
