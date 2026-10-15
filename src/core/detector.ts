@@ -62,6 +62,8 @@ export class MotionDetector {
   private readonly mask?: Uint8Array;
   private readonly channels: number;
   private slots: Slot[] = [];
+  /** Background noise level of the last processed frame (high when the camera shakes). */
+  noise = 0;
   private readonly bin: Uint8Array;
   private readonly diff: Uint8Array;
   private readonly visited: Uint8Array;
@@ -122,6 +124,7 @@ export class MotionDetector {
       cnt++;
     }
     const noise = cnt ? sum / cnt : 0;
+    this.noise = noise;
     const thr = Math.max(this.minThreshold, noise * 5 + 6);
     const bin = this.bin;
     for (let i = 0; i < N; i++) bin[i] = diff[i] >= thr ? 1 : 0;

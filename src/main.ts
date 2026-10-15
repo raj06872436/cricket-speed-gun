@@ -3,6 +3,7 @@ import { h, chips, toast } from './ui/dom';
 import { store } from './ui/store';
 import { fmtDate, fmtSpeed, unitLabel, downloadText } from './ui/format';
 import { Nav, openVideo } from './ui/flow';
+import { liveScreen } from './ui/live';
 import { openCamera, Recorder, CameraSession } from './video/record';
 
 const root = document.getElementById('app')!;
@@ -18,6 +19,9 @@ const nav: Nav = {
     heading?.setAttribute('tabindex', '-1');
   },
   home: () => homeScreen(),
+  onLeave(fn) {
+    cleanup = fn;
+  },
 };
 
 function pickFile(): void {
@@ -65,6 +69,7 @@ function homeScreen(): void {
       h('li', {}, h('b', {}, 'Keep still. '), 'Lean on something or use a tripod. Hold the phone sideways.'),
       h('li', {}, h('b', {}, 'Use slow-motion if you can. '), 'Film in your camera app’s Slo-mo mode (120 or 240 fps), then tap “Use a video”. More frames = more accurate.'),
       h('li', {}, h('b', {}, 'Short clips. '), 'Start just before the run-up ends and stop after the ball reaches the batter.'),
+      h('li', {}, h('b', {}, 'Live mode: '), 'put the phone on a tripod or prop it up so it doesn\u2019t move. You get a speed after every ball, hands-free.'),
     ),
   );
   tips.addEventListener('toggle', () => store.saveSettings({ seenIntro: true }));
@@ -84,6 +89,7 @@ function homeScreen(): void {
         'div.home-actions',
         {},
         h('button.primary.huge', { type: 'button', onclick: recordScreen }, h('span.ico', { 'aria-hidden': 'true' }, '⏺'), h('span.txt', {}, 'Record a ball', h('small', {}, 'Film it right here in the app'))),
+        h('button.secondary.huge.live-btn', { type: 'button', onclick: () => liveScreen(nav) }, h('span.ico', { 'aria-hidden': 'true' }, '\u26A1'), h('span.txt', {}, 'Live speed gun', h('small', {}, 'Real time: speed pops up after every ball'))),
         h('button.secondary.huge', { type: 'button', onclick: pickFile }, h('span.ico', { 'aria-hidden': 'true' }, '⇧'), h('span.txt', {}, 'Use a video', h('small', {}, 'Best: a slow-motion video from your camera'))),
       ),
       hist.length

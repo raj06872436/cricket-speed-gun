@@ -38,7 +38,8 @@ export function supportsFrameCallback(video: HTMLVideoElement): boolean {
   return typeof (video as RVFCVideo).requestVideoFrameCallback === 'function';
 }
 
-function makeGrabber(video: HTMLVideoElement, crop: Crop) {
+/** Draws a cropped, scaled region of the current video frame and returns it as two planes. */
+export function makeGrabber(video: HTMLVideoElement, crop: Crop) {
   const ow = Math.max(8, Math.round(crop.w * crop.scale));
   const oh = Math.max(8, Math.round(crop.h * crop.scale));
   const canvas = document.createElement('canvas');
