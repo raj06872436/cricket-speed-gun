@@ -1,0 +1,21 @@
+{
+  "name": "cricket-speed-gun",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Measure cricket ball speed from your phone camera. Runs in the browser, no install needed.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host",
+    "test": "vitest run",
+    "typecheck": "tsc",
+    "e2e": "node scripts/e2e.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3",
+    "vite": "5.4.10",
+    "vitest": "2.1.4"
+  }
+}
