@@ -149,7 +149,7 @@ async function recordScreen(): Promise<void> {
     return;
   }
   const lowFps = cam.fps < 50;
-  status.textContent = `${cam.fps} fps${lowFps ? ' — tip: slow-mo video is more accurate' : ''}`;
+  status.textContent = `${cam.fps} fps${lowFps ? ' - tip: slow-mo video is more accurate' : ''}`;
   btn.disabled = false;
 
   const stop = async () => {
@@ -175,7 +175,7 @@ async function recordScreen(): Promise<void> {
     btn.classList.add('on');
     btn.setAttribute('aria-label', 'Stop recording');
     const t0 = Date.now();
-    timer = window.setInterval(() => (status.textContent = `● REC ${((Date.now() - t0) / 1000).toFixed(1)} s — tap to stop`), 100);
+    timer = window.setInterval(() => (status.textContent = `● REC ${((Date.now() - t0) / 1000).toFixed(1)} s - tap to stop`), 100);
     stopTimer = window.setTimeout(stop, 10000);
   });
 }

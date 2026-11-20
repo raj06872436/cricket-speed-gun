@@ -162,7 +162,7 @@ function setupScreen(nav: Nav, session: Session): void {
         ? `<span class="badge y">1</span> Tap ${what1}.`
         : n === 1
           ? `<span class="badge b">2</span> Now tap ${what2}.`
-          : `<span class="badge ok">✓</span> Lines set. Drag a circle to fine-tune — drag a <b>top</b> circle to tilt a line so it matches the stumps.`;
+          : `<span class="badge ok">✓</span> Lines set. Drag a circle to fine-tune - drag a <b>top</b> circle to tilt a line so it matches the stumps.`;
     measureBtn.disabled = n !== -1;
   };
   stage.onChange = update;
@@ -465,7 +465,7 @@ function resultScreen(nav: Nav, session: Session): void {
 
   const share = async () => {
     const st = store.settings();
-    const text = `${bowler.value ? bowler.value + ' bowled' : 'Bowled'} at ${fmtSpeed(a.speed.release, st.unit)} ${unitLabel(st.unit)}${a.bounce ? ` (${a.bounce.length.toLowerCase()})` : ''} — measured with Cricket Speed Gun`;
+    const text = `${bowler.value ? bowler.value + ' bowled' : 'Bowled'} at ${fmtSpeed(a.speed.release, st.unit)} ${unitLabel(st.unit)}${a.bounce ? ` (${a.bounce.length.toLowerCase()})` : ''} - measured with Cricket Speed Gun`;
     try {
       if (navigator.share) await navigator.share({ text, url: location.href.split('#')[0] });
       else {
@@ -537,7 +537,7 @@ function manualScreen(nav: Nav, session: Session): void {
     if (my !== seq) return;
     stage.render();
     const tags = [marks.A === i ? 'line 1' : '', marks.B === i ? 'line 2' : '', marks.bounce === i ? 'bounce' : ''].filter(Boolean).join(', ');
-    counter.textContent = `Frame ${i + 1} of ${times.length}${tags ? ` — ${tags}` : ''}`;
+    counter.textContent = `Frame ${i + 1} of ${times.length}${tags ? ` - ${tags}` : ''}`;
     renderMarks();
   };
   slider.addEventListener('input', () => show(Number(slider.value)));

@@ -1,6 +1,6 @@
 # 🏏 Cricket Speed Gun
 
-**Measure how fast a cricket ball is bowled — with just your phone's camera.**
+**Measure how fast a cricket ball is bowled - with just your phone's camera.**
 
 No app store, no sign-up, no special equipment. Open the website on your phone, film a ball, tap two spots, and get the speed.
 

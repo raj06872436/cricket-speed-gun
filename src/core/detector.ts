@@ -185,7 +185,7 @@ export class MotionDetector {
       if (tooBig || area < this.minArea) continue;
       const bw = maxX - minX + 1;
       const bh = maxY - minY + 1;
-      // Reject thin lines spanning a big box (e.g. a moving bat edge) — the ball is compact or a short streak.
+      // Reject thin lines spanning a big box (e.g. a moving bat edge) - the ball is compact or a short streak.
       const fill = area / (bw * bh);
       if (fill < 0.15 && area > 12) continue;
       blobs.push({
