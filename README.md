@@ -1,3 +1,5 @@
+<p align="center"><a href="https://raj06872436.github.io/cricket-speed-gun/"><img src=".github/cover.svg" width="100%" alt="Cricket Speed Gun" /></a></p>
+
 # 🏏 Cricket Speed Gun
 
 **Measure how fast a cricket ball is bowled - with just your phone's camera.**
